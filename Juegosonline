@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Haz click aquí</title>
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f0f0f0;
+            transition: background-color 1s;
+        }
+
+        .click-text {
+            font-size: 1.5rem;
+            color: #000;
+            cursor: pointer;
+        }
+
+        .message {
+            font-size: 2rem;
+            color: #333;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .code-container {
+            display: none;
+            color: #00ff00;
+            font-family: monospace;
+            font-size: 1.2rem;
+            white-space: pre;
+            margin-top: 20px;
+            background-color: black;
+            height: 100vh;
+            overflow: hidden;
+            color: #00ff00;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="click-text" id="clickText">Haz click aquí para descargar</div>
+    <div class="message" id="message">Vos sos boludo</div>
+    <div class="code-container" id="codeContainer"></div>
+
+    <script>
+        document.getElementById("clickText").addEventListener("click", () => {
+            // Mostrar el mensaje
+            document.getElementById("message").style.display = "block";
+            document.getElementById("clickText").style.display = "none"; // Ocultar el texto inicial
+            
+            // Después de 5 segundos, cambiar la pantalla a negro y mostrar códigos
+            setTimeout(() => {
+                document.body.style.backgroundColor = "black"; // Cambiar el fondo a negro
+                document.getElementById("codeContainer").style.display = "block";
+                showRandomCodes();
+            }, 5000);
+        });
+
+        function showRandomCodes() {
+            const codeContainer = document.getElementById("codeContainer");
+            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            const generateRandomCode = () => {
+                let code = '';
+                for (let i = 0; i < 20; i++) {
+                    const randomIndex = Math.floor(Math.random() * characters.length);
+                    code += characters[randomIndex];
+                }
+                return code;
+            };
+
+            setInterval(() => {
+                codeContainer.innerHTML += generateRandomCode() + '\n';
+                codeContainer.scrollTop = codeContainer.scrollHeight; // Desplazar hacia abajo
+            }, 100); // Mostrar un código nuevo cada 100ms
+        }
+    </script>
+</body>
+</html>
